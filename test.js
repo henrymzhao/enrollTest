@@ -9,12 +9,25 @@
 // ==/UserScript==
 
 (function() {
-  var everythingLoaded = setInterval(function()
+  // var everythingLoaded = setInterval(function()
+  // {
+  //   var checkPage = document.getElementById('SSS_STUDENT_CENTER');
+  // }, 100);
+  //
+  // if (checkPage)
+  // {
+  //   alert("loaded!");
+  // }
+
+  var formLoaded;
+  var checkFormLoaded = setInterval(function()
   {
-    if (/loaded|complete/.test(document.readyState))
+    formLoaded = document.getElementById("SSS_STUDENT_CENTER");
+    if (formLoaded)
     {
-      clearInterval(everythingLoaded);
-      alert("loaded!");
+      alert("got em");
+      clearInterval(checkFormLoaded);
     }
-  }, 10);
+  }, 2000);
+
 })();
