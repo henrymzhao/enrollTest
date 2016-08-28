@@ -14,38 +14,40 @@
     var dummy;
     var checkThisLoaded = setInterval(function ()
     {
-      console.log("Looking for ID: " + item);
+      console.log("Looking for ID: " + document.getElementById(item));
       dummy = document.getElementById(item);
       if (dummy)
       {
         console.warn("Found ID: " + item);
+        checkpoints.callback = true;
         ftn(dummy);
-        callback = true;
-        console.warn(callback);
         clearInterval(checkThisLoaded);
       }
-    }, 500);
+    }, 1000);
   }
+  var checkpoints =
+  {
+    enrollDone : false,
+    checkedDone : false
+  };
 
-  var enrollDone = false;
   function checkEnroll(dummy)
   {
     dummy.click();
     console.log("Successfully clicked enroll");
   }
-  masterCheckLoaded('DERIVED_SSS_SCR_SSS_LINK_ANCHOR3', checkEnroll, enrollDone);
-  console.error(enrollDone);
+  function checkSemClick(dummy)
+  {
+    dummy.click();
+    console.log("Successfully clicked semester");
+  }
 
-
-  // var checkedDone = false;
-  // function checkSemClick(dummy)
-  // {
-  //   dummy.checked = true;
-  //   console.log("Successfully clicked semester");
-  // }
-  // console.error(enrollDone, checkedDone);
-  // while (enrollDone && !checkedDone)
-  // {
-  //   masterCheckLoaded('SSR_DUMMY_RECV1$sels$1$$0', checkSemClick, checkedDone);
-  // }
+  if (window.location.href == 'https://go.sfu.ca/psp/paprd/EMPLOYEE/EMPL/h/?tab=SFU_STUDENT_CENTER')
+  {
+    masterCheckLoaded('DERIVED_SSS_SCR_SSS_LINK_ANCHOR3', checkEnroll, checkpoints.enrollDone);
+  }
+  if (window.location.href == 'https://go.sfu.ca/psp/paprd_1/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ExactKeys=Y&TargetFrameName=None')
+  {
+    masterCheckLoaded('DERIVED_SSS_SCT_SSR_PB_GO', checkSemClick, checkpoints.checkedDone);
+  }
 })();
