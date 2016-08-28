@@ -4,30 +4,48 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://go.sfu.ca/psp/paprd/EMPLOYEE/EMPL/h/?tab=SFU_STUDENT_CENTER
+// @match        https://go.sfu.ca/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
-  // var everythingLoaded = setInterval(function()
-  // {
-  //   var checkPage = document.getElementById('SSS_STUDENT_CENTER');
-  // }, 100);
-  //
-  // if (checkPage)
-  // {
-  //   alert("loaded!");
-  // }
-
-  var formLoaded;
-  var checkFormLoaded = setInterval(function()
+  function masterCheckLoaded(item, ftn, callback)
   {
-    formLoaded = document.getElementById("SSS_STUDENT_CENTER");
-    if (formLoaded)
+    var dummy;
+    var checkThisLoaded = setInterval(function ()
     {
-      alert("got em");
-      clearInterval(checkFormLoaded);
-    }
-  }, 2000);
+      console.log("Looking for ID: " + item);
+      dummy = document.getElementById(item);
+      if (dummy)
+      {
+        console.warn("Found ID: " + item);
+        ftn(dummy);
+        callback = true;
+        console.warn(callback);
+        clearInterval(checkThisLoaded);
+      }
+    }, 500);
+  }
 
+  var enrollDone = false;
+  function checkEnroll(dummy)
+  {
+    dummy.click();
+    console.log("Successfully clicked enroll");
+  }
+  masterCheckLoaded('DERIVED_SSS_SCR_SSS_LINK_ANCHOR3', checkEnroll, enrollDone);
+  console.error(enrollDone);
+
+
+  // var checkedDone = false;
+  // function checkSemClick(dummy)
+  // {
+  //   dummy.checked = true;
+  //   console.log("Successfully clicked semester");
+  // }
+  // console.error(enrollDone, checkedDone);
+  // while (enrollDone && !checkedDone)
+  // {
+  //   masterCheckLoaded('SSR_DUMMY_RECV1$sels$1$$0', checkSemClick, checkedDone);
+  // }
 })();
