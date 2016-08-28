@@ -9,10 +9,12 @@
 // ==/UserScript==
 
 (function() {
-    var mainPage;
-    do {
-    mainPage = document.getElementById('win1divPAGECONTAINER');
+  var everythingLoaded = setInterval(function()
+  {
+    if (/loaded|complete/.test(document.readyState))
+    {
+      clearInterval(everythingLoaded);
+      alert("loaded!");
     }
-    while(!mainPage);
-    alert("mainPage loaded");
+  }, 10);
 })();
